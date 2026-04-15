@@ -3563,12 +3563,14 @@ function navigateToNextScreen() {
 // ===== إضافة دعم السحب للتحديث =====
 
 function setupPullToRefresh() {
+    // تم تعطيل هذه الميزة لمنع التحديث التلقائي عند اللمس
+    return;
 
     let startY = 0;
 
     let isPulling = false;
 
-    
+
 
     document.addEventListener('touchstart', function(e) {
 
@@ -3582,19 +3584,19 @@ function setupPullToRefresh() {
 
     });
 
-    
+
 
     document.addEventListener('touchmove', function(e) {
 
         if (!isPulling) return;
 
-        
+
 
         const currentY = e.touches[0].pageY;
 
         const diff = currentY - startY;
 
-        
+
 
         if (diff > 100) {
 
@@ -3606,7 +3608,7 @@ function setupPullToRefresh() {
 
     });
 
-    
+
 
     document.addEventListener('touchend', function() {
 
