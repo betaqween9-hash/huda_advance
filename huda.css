@@ -1214,10 +1214,10 @@ body {
 
 .fixed-bottom-btn {
     position: fixed;
-    bottom: 80px;
+    bottom: 70px;
     left: 20px;
     right: 20px;
-    z-index: 50;
+    z-index: 10002;
 }
 
 .btn-add-to-cart {
@@ -1260,7 +1260,7 @@ body {
     bottom: 60px;
     left: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 10001;
     background: #333333;
     padding: 20px;
     border-radius: 20px 20px 0 0;
@@ -2435,7 +2435,7 @@ body {
 
 /* ===== Settings Screen ===== */
 .settings-container {
-    padding: 80px 20px 20px;
+    padding: 80px 20px 100px;
     max-width: 600px;
     margin: 0 auto;
 }

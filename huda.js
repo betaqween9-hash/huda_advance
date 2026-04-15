@@ -3485,12 +3485,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== دعم اللمس للأجهزة المحمولة =====
 
 function setupTouchSupport() {
+    // تم تعطيل هذه الميزة لمنع السحب الجانبي
+    return;
 
     let touchStartX = 0;
 
     let touchEndX = 0;
 
-    
+
 
     document.addEventListener('touchstart', function(e) {
 
@@ -3498,7 +3500,7 @@ function setupTouchSupport() {
 
     });
 
-    
+
 
     document.addEventListener('touchend', function(e) {
 
@@ -3508,7 +3510,7 @@ function setupTouchSupport() {
 
     });
 
-    
+
 
     function handleSwipe() {
 
@@ -3516,7 +3518,7 @@ function setupTouchSupport() {
 
         const diff = touchStartX - touchEndX;
 
-        
+
 
         if (Math.abs(diff) > swipeThreshold) {
 
