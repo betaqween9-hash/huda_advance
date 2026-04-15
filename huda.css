@@ -1940,8 +1940,8 @@ body {
     .cart-summary-container {
         max-width: 800px;
         margin: 0 auto;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        right: 0;
         border-radius: var(--border-radius-large);
         width: calc(100% - 40px);
         bottom: 80px !important;
