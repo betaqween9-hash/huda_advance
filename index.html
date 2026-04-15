@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الهدى ادفانس - سوبر ماركت إلكتروني</title>
+    <link rel="stylesheet" href="huda.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- شريط حالة الاتصال -->
+    <div id="offline-banner" class="offline-banner">
+        <i class="fas fa-wifi-slash"></i>
+        <span data-i18n="offline-message">لا يوجد اتصال بالإنترنت</span>
+    </div>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="screen active">
+        <div class="splash-content">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h1 data-i18n="app-name">الهدى ادفانس</h1>
+                </div>
+                <p class="tagline" data-i18n="tagline">تسوق بسهولة… كل احتياجاتك في مكان واحد</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="screen">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2 id="auth-title" data-i18n="welcome-message">مرحباً بك في الهدى ادفانس</h2>
+                    <p id="auth-subtitle" data-i18n="auth-subtitle">سجل دخولك أو أنشئ حساب جديد</p>
+                </div>
+                
+                <!-- Tab Buttons -->
+                <div class="auth-tabs">
+                    <button id="login-tab" class="tab-btn active" onclick="switchAuthTab('login')" data-i18n="login">تسجيل الدخول</button>
+                    <button id="register-tab" class="tab-btn" onclick="switchAuthTab('register')" data-i18n="register">إنشاء حساب</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" id="login-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required data-i18n-placeholder="email-or-phone">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="كلمة المرور" required data-i18n-placeholder="password">
+                    </div>
+                    <div class="remember-forgot">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="remember-me">
+                            <span class="checkmark"></span>
+                            <span data-i18n="remember-me">تذكرني</span>
+                        </label>
+                        <a href="#" class="forgot-password" data-i18n="forgot-password">نسيت كلمة المرور؟</a>
+                    </div>
+                    <button type="submit" class="btn-primary" data-i18n="login">تسجيل الدخول</button>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="register-name" placeholder="الاسم الكامل" required data-i18n-placeholder="enter-full-name">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" id="register-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required data-i18n-placeholder="email-or-phone">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="register-location" placeholder="العنوان" required data-i18n-placeholder="enter-address">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" placeholder="كلمة المرور" required data-i18n-placeholder="password">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-confirm-password" placeholder="تأكيد كلمة المرور" required data-i18n-placeholder="confirm-password">
+                    </div>
+                    <button type="submit" class="btn-primary" data-i18n="register">إنشاء حساب</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="home-screen" class="screen">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-shopping-cart"></i>
+                <span data-i18n="app-name">الهدى ادفانس</span>
+            </div>
+            <div class="nav-actions">
+                <div class="notification-icon" onclick="showScreen('notifications')">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="cart-icon" onclick="showScreen('cart')">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-bar" onclick="toggleSearchInterface()">
+                <i class="fas fa-search" id="search-icon"></i>
+                <input type="text" placeholder="ابحث عن منتجات..." id="search-input" data-i18n-placeholder="search-placeholder">
+            </div>
+        </div>
+
+        <!-- Search Interface (Hidden by default) -->
+        <div class="search-interface" id="search-interface" style="display: none;">
+            <div class="search-header">
+                <div class="search-bar-full">
+                    <i class="fas fa-arrow-right" onclick="closeSearchInterface()"></i>
+                    <input type="text" placeholder="ابحث عن منتجات..." id="search-input-full" autofocus data-i18n-placeholder="search-placeholder">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div class="search-content">
+                <!-- Search results will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Offers Slider -->
+            <section class="offers-slider">
+                <div class="slide active">
+                    <div class="offer-content">
+                        <span class="discount-badge" data-i18n="discount-30">خصم 30%</span>
+                        <h3 data-i18n="fresh-vegetables-offers">عروض الخضروات الطازجة</h3>
+                        <p data-i18n="best-vegetables-prices">أجود الخضروات بأسعار مميزة</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Grid -->
+            <section class="categories">
+                <h2 class="section-title" data-i18n="categories-title">الأقسام الرئيسية</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <i class="fas fa-carrot"></i>
+                        <span data-i18n="vegetables">خضروات</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-apple-alt"></i>
+                        <span data-i18n="fruits">فواكه</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-cheese"></i>
+                        <span data-i18n="dairy">ألبان</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-glass-water"></i>
+                        <span data-i18n="beverages">مشروبات</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-drumstick-bite"></i>
+                        <span data-i18n="meat">لحوم</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-spray-can"></i>
+                        <span data-i18n="cleaning">منظفات</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-box"></i>
+                        <span data-i18n="canned">معلبات</span>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-cookie"></i>
+                        <span data-i18n="sweets">حلويات</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest Offers -->
+            <section class="latest-offers">
+                <h2 class="section-title" data-i18n="latest-offers">أحدث العروض</h2>
+                <div class="offers-horizontal">
+                    <div class="offer-card" onclick="goToProductDetails('طماطم طازجة')">
+                        <img src="https://via.placeholder.com/150x150" alt="منتج">
+                        <h4>طماطم طازجة</h4>
+                        <div class="price-container">
+                            <span class="old-price">15 ريال</span>
+                            <span class="new-price">10 ريال</span>
+                        </div>
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(this)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn-favorite" onclick="event.stopPropagation(); toggleFavorite('1')">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="offer-card" onclick="goToProductDetails('تفاح أحمر')">
+                        <img src="https://via.placeholder.com/150x150" alt="منتج">
+                        <h4>تفاح أحمر</h4>
+                        <div class="price-container">
+                            <span class="old-price">25 ريال</span>
+                            <span class="new-price">18 ريال</span>
+                        </div>
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(this)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn-favorite" onclick="event.stopPropagation(); toggleFavorite('4')">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Sellers -->
+            <section class="best-sellers">
+                <h2 class="section-title" data-i18n="best-sellers">الأكثر مبيعاً</h2>
+                <div class="products-grid">
+                    <div class="product-card" onclick="goToProductDetails('حليب طازج')">
+                        <img src="https://via.placeholder.com/200x200" alt="منتج">
+                        <h4>حليب طازج</h4>
+                        <span class="weight">1 لتر</span>
+                        <div class="price">12 ريال</div>
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(this)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn-favorite" onclick="event.stopPropagation(); toggleFavorite('7')">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="product-card" onclick="goToProductDetails('خبز أسمر')">
+                        <img src="https://via.placeholder.com/200x200" alt="منتج">
+                        <h4>خبز أسمر</h4>
+                        <span class="weight">500 جرام</span>
+                        <div class="price">8 ريال</div>
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(this)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn-favorite" onclick="event.stopPropagation(); toggleFavorite('8')">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Products Screen -->
+    <div id="products-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="vegetables">الخضروات</span>
+            </div>
+            <div class="cart-icon" onclick="showScreen('cart')">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="badge" id="cart-count-products">0</span>
+            </div>
+        </nav>
+
+        <div class="filter-bar">
+            <button class="filter-btn">
+                <i class="fas fa-filter"></i>
+                <span data-i18n="filter">فلترة</span>
+            </button>
+            <button class="sort-btn">
+                <i class="fas fa-sort"></i>
+                <span data-i18n="sort">ترتيب</span>
+            </button>
+        </div>
+
+        <div class="products-container">
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/200x200" alt="منتج">
+                    <div class="product-info">
+                        <h4>طماطم حمراء</h4>
+                        <span class="weight">1 كجم</span>
+                        <div class="price-container">
+                            <span class="old-price">20 ريال</span>
+                            <span class="new-price">15 ريال</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="btn-favorite" onclick="event.stopPropagation(); toggleFavorite(1)">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Screen -->
+    <div id="product-details-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="product-details">تفاصيل المنتج</span>
+            </div>
+        </nav>
+
+        <div class="product-details-container">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/300x300" alt="منتج">
+            </div>
+            <div class="product-info">
+                <h2 id="product-name">اسم المنتج</h2>
+                <div class="price-container">
+                    <span class="old-price" id="product-old-price">20 <span data-i18n="currency">ريال</span></span>
+                    <span class="new-price" id="product-new-price">15 <span data-i18n="currency">ريال</span></span>
+                </div>
+                <div class="product-description">
+                    <h3 data-i18n="product-description">وصف المنتج</h3>
+                    <p id="product-description">وصف المنتج سيظهر هنا بشكل ديناميكي عند تحميل بيانات المنتج الفعلية.</p>
+                </div>
+                <div class="product-details">
+                    <h3 data-i18n="additional-info">معلومات إضافية</h3>
+                    <div class="detail-item">
+                        <span data-i18n="weight">الوزن:</span>
+                        <span id="product-weight">1 <span data-i18n="kg">كجم</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span data-i18n="country-of-origin">بلد المنشأ:</span>
+                        <span id="product-origin">المملكة العربية السعودية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fixed-bottom-btn">
+            <button class="btn-add-to-cart" onclick="addToCartFromDetails()" data-i18n="add-to-cart">إضافة إلى السلة</button>
+        </div>
+    </div>
+
+    <!-- Cart Screen -->
+    <div id="cart-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="cart">السلة</span>
+            </div>
+        </nav>
+
+        <div class="cart-items-container">
+            <div class="cart-items">
+                <div class="cart-item">
+                    <img src="https://via.placeholder.com/80x80" alt="منتج">
+                    <div class="item-info">
+                        <h4>طماطم حمراء</h4>
+                        <span class="price">15 ريال</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity">1</span>
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="remove-item">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary-container">
+            <div class="cart-summary">
+                <div class="summary-item">
+                    <span data-i18n="total-order">مجموع الطلب:</span>
+                    <span id="cart-total-order">15 <span data-i18n="currency">ريال</span></span>
+                </div>
+                <div class="summary-item">
+                    <span data-i18n="delivery-fee">رسوم التوصيل:</span>
+                    <span id="cart-delivery-fee">10 <span data-i18n="currency">ريال</span></span>
+                </div>
+                <div class="summary-total">
+                    <span data-i18n="final-total">الإجمالي النهائي:</span>
+                    <span id="cart-final-total">25 <span data-i18n="currency">ريال</span></span>
+                </div>
+                <button class="btn-checkout" onclick="showScreen('checkout')" data-i18n="checkout">إتمام الطلب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Screen -->
+    <div id="checkout-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="checkout">إتمام الطلب</span>
+            </div>
+        </nav>
+
+        <div class="checkout-container">
+            <form class="checkout-form">
+                <!-- User Info Summary -->
+                <div class="checkout-user-info" style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #eee;">
+                    <h4 style="margin-top:0; margin-bottom:10px; font-size:16px; color:var(--text-primary); border-bottom:1px solid #ddd; padding-bottom:8px;">بيانات العميل</h4>
+                    <p style="margin:8px 0; color:var(--text-secondary); font-size:14px;"><i class="fas fa-user" style="color:var(--accent-yellow); width:20px;"></i> <span id="checkout-user-name"></span></p>
+                    <p style="margin:8px 0; color:var(--text-secondary); font-size:14px;"><i class="fas fa-phone" style="color:var(--accent-yellow); width:20px;"></i> <span id="checkout-user-phone"></span></p>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="shipping-address">عنوان التوصيل</label>
+                    <div id="checkout-addresses-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                        <!-- يتم ملء العناوين هنا -->
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="showAddAddressForm()" style="width: 100%; padding: 12px; font-family: 'Cairo', sans-serif;">
+                        <i class="fas fa-plus"></i> <span data-i18n="add-new-address">إضافة عنوان جديد</span>
+                    </button>
+                    <!-- Hidden input to store selected address ID -->
+                    <input type="hidden" id="checkout-selected-address" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="payment-method">طريقة الدفع</label>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cash" checked>
+                            <span data-i18n="cash-on-delivery">عند الاستلام</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="transfer">
+                            <span data-i18n="bank-transfer">تحويل بنكي</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="wallet">
+                            <span data-i18n="electronic-wallet">محفظة إلكترونية</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-confirm" data-i18n="confirm-order">تأكيد الطلب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifications Screen -->
+    <div id="notifications-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="notifications">الإشعارات</span>
+            </div>
+        </nav>
+
+        <div class="notifications-container">
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <div class="notification-content">
+                    <h4 data-i18n="special-offer-vegetables">عرض خاص على الخضروات</h4>
+                    <p data-i18n="discount-30-percent">خصم 30% على جميع الخضروات الطازجة لمدة 24 ساعة</p>
+                    <span class="notification-time">منذ 10 دقائق</span>
+                </div>
+                <div class="notification-badge"></div>
+            </div>
+
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="notification-content">
+                    <h4 data-i18n="order-on-way">طلبك في الطريق</h4>
+                    <p data-i18n="order-shipped">طلبك #12345 تم شحنه وسيصلك خلال 30 دقيقة</p>
+                    <span class="notification-time">منذ ساعة</span>
+                </div>
+                <div class="notification-badge"></div>
+            </div>
+
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div class="notification-content">
+                    <h4 data-i18n="special-gift">هدية خاصة</h4>
+                    <p data-i18n="use-huda20">استخدم كود HUDA20 واحصل على خصم 20% على طلبك التالي</p>
+                    <span class="notification-time">منذ 3 ساعات</span>
+                </div>
+                <div class="notification-badge"></div>
+            </div>
+
+            <div class="notification-item read">
+                <div class="notification-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="notification-content">
+                    <h4 data-i18n="order-confirmed">تم تأكيد طلبك</h4>
+                    <p data-i18n="order-confirmed-successfully">طلبك #12344 تم تأكيده بنجاح</p>
+                    <span class="notification-time">أمس</span>
+                </div>
+            </div>
+
+            <div class="notification-item read">
+                <div class="notification-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="notification-content">
+                    <h4 data-i18n="rate-product">تقييم المنتج</h4>
+                    <p data-i18n="rate-products">قيم المنتجات التي اشتريتها واكسب نقاط مكافآت</p>
+                    <span class="notification-time">منذ يومين</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Screen -->
+    <div id="orders-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="orders">الطلبات</span>
+            </div>
+        </nav>
+
+        <div class="orders-container">
+            <div class="order-card">
+                <div class="order-header">
+                    <div class="order-info">
+                        <span class="order-number">#12345</span>
+                        <span class="order-date">2024-02-27</span>
+                    </div>
+                    <span class="order-status delivering" data-i18n="delivering">قيد التوصيل</span>
+                </div>
+                <div class="order-items">
+                    <span data-i18n="products-count">3 منتجات</span>
+                </div>
+                <div class="order-total">
+                    <span data-i18n="amount">المبلغ: 150 ريال</span>
+                </div>
+                <button class="btn-view-details" data-i18n="view-details">عرض التفاصيل</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Screen -->
+    <div id="favorites-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="favorites">المفضلة</span>
+            </div>
+        </nav>
+
+        <div class="favorites-container">
+            <div id="favorites-list" class="favorites-list">
+                <!-- المنتجات المفضلة ستُعرض هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Screen -->
+    <div id="profile-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="profile">حسابي</span>
+            </div>
+        </nav>
+
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h3>أحمد محمد</h3>
+                    <span>0551234567</span>
+                </div>
+            </div>
+
+            <div class="profile-menu">
+                <div class="menu-item active" onclick="showEditProfile()">
+                    <i class="fas fa-user"></i>
+                    <span data-i18n="edit-data">تعديل البيانات</span>
+                </div>
+                <div class="menu-item" onclick="showSavedAddresses()">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span data-i18n="saved-addresses">العناوين المحفوظة</span>
+                </div>
+                <div class="menu-item" onclick="showFavorites()">
+                    <i class="fas fa-heart"></i>
+                    <span data-i18n="favorites">المفضلة</span>
+                </div>
+                <div class="menu-item" onclick="showSettings()">
+                    <i class="fas fa-cog"></i>
+                    <span data-i18n="settings">الإعدادات</span>
+                </div>
+                <div class="menu-item logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span data-i18n="logout">تسجيل الخروج</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Screen -->
+    <div id="edit-profile-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="edit-profile">تعديل البيانات</span>
+            </div>
+        </nav>
+
+        <div class="edit-profile-container">
+            <form id="edit-profile-form" class="edit-profile-form">
+                <div class="form-group">
+                    <label data-i18n="full-name">الاسم الكامل</label>
+                    <input type="text" id="edit-name" placeholder="أدخل اسمك الكامل" required data-i18n-placeholder="enter-full-name">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="email">البريد الإلكتروني</label>
+                    <input type="email" id="edit-email" placeholder="أدخل البريد الإلكتروني" required data-i18n-placeholder="enter-email">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="phone">رقم الهاتف</label>
+                    <input type="tel" id="edit-phone" placeholder="أدخل رقم الهاتف" required data-i18n-placeholder="enter-phone">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="address">العنوان</label>
+                    <input type="text" id="edit-location" placeholder="أدخل العنوان بالتفصيل" required data-i18n-placeholder="enter-address">
+                </div>
+                <button type="submit" class="btn-confirm" data-i18n="save-changes">حفظ التغييرات</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Saved Addresses Screen -->
+    <div id="saved-addresses-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="saved-addresses">العناوين المحفوظة</span>
+            </div>
+        </nav>
+
+        <div class="saved-addresses-container">
+            <div id="addresses-list" class="addresses-list">
+                <!-- العناوين ستُعرض هنا -->
+            </div>
+            <button class="btn-add-address" onclick="showAddAddressForm()">
+                <i class="fas fa-plus"></i>
+                <span data-i18n="add-new-address">إضافة عنوان جديد</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Add/Edit Address Screen -->
+    <div id="add-address-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span id="address-form-title" data-i18n="add-new-address">إضافة عنوان جديد</span>
+            </div>
+        </nav>
+
+        <div class="add-address-container">
+            <form id="address-form" class="address-form">
+                <input type="hidden" id="address-id">
+                <input type="hidden" id="address-lat">
+                <input type="hidden" id="address-lng">
+                
+                <div class="form-group">
+                    <label data-i18n="location-map">تحديد الموقع على الخريطة</label>
+                    <div id="map" style="height: 250px; width: 100%; border-radius: 8px; background-color: #f7f7f7; margin-bottom: 10px; border: 1px solid #ddd;"></div>
+                    <button type="button" class="btn-location" onclick="getCurrentLocation()" style="width: 100%; background: #e0f2fe; color: #0284c7; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif;">
+                        <i class="fas fa-location-arrow"></i> استخدام موقعي الحالي
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="address-description">وصف الموقع</label>
+                    <input type="text" id="address-description" placeholder="مثال: بجانب المسجد، خلف السوق..." required>
+                </div>
+                
+                <button type="submit" class="btn-confirm" data-i18n="save-address">حفظ العنوان</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Screen -->
+    <div id="settings-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="settings">الإعدادات</span>
+            </div>
+        </nav>
+
+        <div class="settings-container">
+            <div class="settings-section">
+                <h3 data-i18n="language">اللغة</h3>
+                <div class="settings-item">
+                    <i class="fas fa-language"></i>
+                    <span data-i18n="app-language">لغة التطبيق</span>
+                    <select id="language-select" onchange="changeLanguage(this.value)">
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 data-i18n="appearance">المظهر</h3>
+                <div class="settings-item">
+                    <i class="fas fa-palette"></i>
+                    <span data-i18n="app-mode">وضع التطبيق</span>
+                    <select id="theme-select" onchange="changeTheme(this.value)">
+                        <option value="light" data-i18n="light">فاتح</option>
+                        <option value="dark" data-i18n="dark">داكن</option>
+                    </select>
+                </div>
+                <div class="settings-item">
+                    <i class="fas fa-text-height"></i>
+                    <span data-i18n="font-size">حجم الخط</span>
+                    <select id="font-size-select" onchange="changeFontSize(this.value)">
+                        <option value="small" data-i18n="small">صغير</option>
+                        <option value="medium" selected data-i18n="medium">متوسط</option>
+                        <option value="large" data-i18n="large">كبير</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 data-i18n="notification-settings">الإشعارات</h3>
+                <div class="settings-item">
+                    <i class="fas fa-bell"></i>
+                    <span data-i18n="offer-notifications">إشعارات العروض</span>
+                    <label class="switch">
+                        <input type="checkbox" id="offers-notifications" onchange="toggleNotifications('offers')" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <i class="fas fa-truck"></i>
+                    <span data-i18n="order-notifications">إشعارات الطلبات</span>
+                    <label class="switch">
+                        <input type="checkbox" id="orders-notifications" onchange="toggleNotifications('orders')" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 data-i18n="privacy">الخصوصية</h3>
+                <div class="settings-item">
+                    <i class="fas fa-lock"></i>
+                    <span data-i18n="remember-login">تذكر بيانات الدخول</span>
+                    <label class="switch">
+                        <input type="checkbox" id="remember-me-setting" onchange="toggleRememberMe()" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 data-i18n="app-info">معلومات التطبيق</h3>
+                <div class="settings-item" onclick="showContactUs()">
+                    <i class="fas fa-phone"></i>
+                    <span data-i18n="contact-us">اتصل بنا</span>
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="settings-item" onclick="showTermsAndConditions()">
+                    <i class="fas fa-file-contract"></i>
+                    <span data-i18n="terms-conditions">الشروط والأحكام</span>
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="settings-item" onclick="showPrivacyPolicy()">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-i18n="privacy-policy">سياسة الخصوصية</span>
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="settings-item" onclick="showFAQ()">
+                    <i class="fas fa-question-circle"></i>
+                    <span data-i18n="faq">التعليمات</span>
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="settings-item" onclick="showAboutUs()">
+                    <i class="fas fa-building"></i>
+                    <span data-i18n="about-us">معلومات عنا</span>
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="settings-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span data-i18n="version">الإصدار</span>
+                    <span class="version">1.0.0</span>
+                </div>
+                <button class="btn-clear-data" onclick="clearAppData()">
+                    <i class="fas fa-trash"></i>
+                    <span data-i18n="clear-all-data">مسح جميع البيانات</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Us Screen -->
+    <div id="contact-us-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="contact-us">اتصل بنا</span>
+            </div>
+        </nav>
+
+        <div class="info-container">
+            <div class="info-section">
+                <h3 data-i18n="contact-us-title">تواصل معنا</h3>
+                <p data-i18n="contact-us-description">نحن هنا لمساعدتك. يمكنك التواصل معنا عبر القنوات التالية:</p>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <div class="contact-info">
+                    <h4 data-i18n="phone">الهاتف</h4>
+                    <p>966555555555+</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div class="contact-info">
+                    <h4 data-i18n="email-label">البريد الإلكتروني</h4>
+                    <p>info@huda-advance.com</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="contact-info">
+                    <h4 data-i18n="address">العنوان</h4>
+                    <p>الرياض، المملكة العربية السعودية</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <div class="contact-info">
+                    <h4 data-i18n="whatsapp">واتساب</h4>
+                    <p>966555555555+</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fab fa-twitter"></i>
+                <div class="contact-info">
+                    <h4 data-i18n="twitter">تويتر</h4>
+                    <p>@huda_advance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Screen -->
+    <div id="terms-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="terms-conditions">الشروط والأحكام</span>
+            </div>
+        </nav>
+
+        <div class="info-container">
+            <div class="info-content">
+                <h3 data-i18n="terms-conditions">الشروط والأحكام</h3>
+                
+                <h4>1. قبول الشروط</h4>
+                <p>باستخدامك لتطبيق "الهدى ادفانس"، فإنك توافق على الالتزام بهذه الشروط والأحكام.</p>
+                
+                <h4>2. التسجيل والحساب</h4>
+                <p>يجب على المستخدمين تقديم معلومات دقيقة وحقيقية عند التسجيل. أنت مسؤول عن الحفاظ على سرية حسابك.</p>
+                
+                <h4>3. الطلبات والدفع</h4>
+                <p>جميع الأسعار معروضة بالريال السعودي. نحتفظ بالحق في تعديل الأسعار في أي وقت. الدفع يتم عند الاستلام أو عبر طرق الدفع المتاحة.</p>
+                
+                <h4>4. التوصيل</h4>
+                <p>نقوم بتوصيل الطلبات في غضون فترة زمنية محددة. نحن غير مسؤولين عن أي تأخير ناتج عن ظروف قاهرة.</p>
+                
+                <h4>5. الإلغاء والاسترجاع</h4>
+                <p>يمكن إلغاء الطلب قبل الشحن. سياسة الاسترجاع تطبق حسب نوع المنتج وحالة الإرجاع.</p>
+                
+                <h4>6. الخصوصية</h4>
+                <p>نحن نحترم خصوصيتك ونحمي بياناتك وفقاً لسياسة الخصوصية.</p>
+                
+                <h4>7. التعديلات</h4>
+                <p>نحن نحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت دون إشعار مسبق.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Screen -->
+    <div id="privacy-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="privacy-policy">سياسة الخصوصية</span>
+            </div>
+        </nav>
+
+        <div class="info-container">
+            <div class="info-content">
+                <h3 data-i18n="privacy-policy">سياسة الخصوصية</h3>
+                
+                <h4>1. جمع المعلومات</h4>
+                <p>نجمع معلومات شخصية مثل الاسم والبريد الإلكتروني ورقم الهاتف والعنوان عند التسجيل وإتمام الطلبات.</p>
+                
+                <h4>2. استخدام المعلومات</h4>
+                <p>نستخدم معلوماتك لمعالجة الطلبات، تحسين الخدمة، وإرسال إشعارات عن العروض والتحديثات.</p>
+                
+                <h4>3. حماية المعلومات</h4>
+                <p>نتخذ تدابير أمنية لحماية بياناتك من الوصول غير المصرح به أو التسرب أو التعديل.</p>
+                
+                <h4>4. مشاركة المعلومات</h4>
+                <p>لا نشارك معلوماتك الشخصية مع أطراف ثالثة إلا لغرض معالجة الطلبات أو كما هو مطلوب بموجب القانون.</p>
+                
+                <h4>5. ملفات تعريف الارتباط</h4>
+                <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك في التطبيق.</p>
+                
+                <h4>6. حقوقك</h4>
+                <p>لديك الحق في الوصول إلى بياناتك وتصحيحها أو حذفها في أي وقت.</p>
+                
+                <h4>7. التغييرات</h4>
+                <p>قد نقوم بتحديث سياسة الخصوصية من وقت لآخر. سيتم إعلامك بأي تغييرات كبيرة.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Screen -->
+    <div id="faq-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="faq">التعليمات</span>
+            </div>
+        </nav>
+
+        <div class="info-container">
+            <div class="info-content">
+                <h3 data-i18n="faq">الأسئلة الشائعة</h3>
+                
+                <div class="faq-item">
+                    <h4>كيف يمكنني التسجيل في التطبيق؟</h4>
+                    <p>يمكنك التسجيل عبر الضغط على زر "تسجيل الدخول" في شاشة البداية وملء البيانات المطلوبة.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>كيف يمكنني إضافة منتج للسلة؟</h4>
+                    <p>اضغط على زر (+) بجانب المنتج لإضافته إلى السلة.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>ما هي طرق الدفع المتاحة؟</h4>
+                    <p>نقبل الدفع عند الاستلام، التحويل البنكي، والمحفظة الإلكترونية.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>كم تستغرق عملية التوصيل؟</h4>
+                    <p>يتم التوصيل عادة خلال 30-60 دقيقة حسب موقعك.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>كيف يمكنني تتبع طلبي؟</h4>
+                    <p>يمكنك تتبع طلبك من خلال شاشة "الطلبات" في التطبيق.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>هل يمكنني إلغاء طلبي؟</h4>
+                    <p>نعم، يمكنك إلغاء الطلب قبل الشحن من خلال شاشة الطلبات.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>كيف يمكنني إضافة منتج للمفضلة؟</h4>
+                    <p>اضغط على أيقونة القلب بجانب المنتج لإضافته إلى المفضلة.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us Screen -->
+    <div id="about-screen" class="screen">
+        <nav class="navbar">
+            <div class="nav-back" onclick="goBack()">
+                <i class="fas fa-arrow-right"></i>
+                <span data-i18n="about-us">معلومات عنا</span>
+            </div>
+        </nav>
+
+        <div class="info-container">
+            <div class="info-content">
+                <h3 data-i18n="about-us">معلومات عنا</h3>
+                
+                <div class="about-section">
+                    <h4 data-i18n="who-we-are">من نحن</h4>
+                    <p>تطبيق "الهدى ادفانس" هو تطبيق متجر إلكتروني متخصص في بيع المنتجات الغذائية والاستهلاكية. نسعى لتوفير أفضل المنتجات بأسعار تنافسية مع خدمة توصيل سريعة وموثوقة.</p>
+                </div>
+                
+                <div class="about-section">
+                    <h4 data-i18n="our-vision">رؤيتنا</h4>
+                    <p>أن نكون الخيار الأول للعملاء في المملكة العربية السعودية للتسوق الإلكتروني للمنتجات الغذائية.</p>
+                </div>
+                
+                <div class="about-section">
+                    <h4 data-i18n="our-mission">رسالتنا</h4>
+                    <p>توفير تجربة تسوق مريحة وآمنة للعملاء مع التركيز على الجودة والسرعة والخدمة المتميزة.</p>
+                </div>
+                
+                <div class="about-section">
+                    <h4 data-i18n="our-values">قيمنا</h4>
+                    <ul>
+                        <li>الجودة: نقدم منتجات عالية الجودة</li>
+                        <li>السرعة: توصيل سريع وفعال</li>
+                        <li>الثقة: شفافية كاملة مع العملاء</li>
+                        <li>الخدمة: خدمة عملاء متميزة</li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h4 data-i18n="contact-us">تواصل معنا</h4>
+                    <p>الهاتف: 966555555555+</p>
+                    <p>البريد: info@huda-advance.com</p>
+                    <p>الموقع: الرياض، المملكة العربية السعودية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-screen="home">
+            <i class="fas fa-home"></i>
+            <span data-i18n="home">الرئيسية</span>
+        </div>
+        <div class="nav-item" data-screen="categories">
+            <i class="fas fa-th-large"></i>
+            <span data-i18n="categories">الأقسام</span>
+        </div>
+        <div class="nav-item" data-screen="cart">
+            <i class="fas fa-shopping-bag"></i>
+            <span data-i18n="cart">السلة</span>
+        </div>
+        <div class="nav-item" data-screen="orders">
+            <i class="fas fa-receipt"></i>
+            <span data-i18n="orders">الطلبات</span>
+        </div>
+        <div class="nav-item" data-screen="profile">
+            <i class="fas fa-user"></i>
+            <span data-i18n="profile">حسابي</span>
+        </div>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toast-message">تمت الإضافة إلى السلة</span>
+    </div>
+
+    <script src="huda.js"></script>
+</body>
+</html>
