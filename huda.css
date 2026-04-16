@@ -1101,7 +1101,8 @@ body {
 
 /* ===== صفحة تفاصيل المنتج ===== */
 .product-details-container {
-    padding: 80px 20px 100px;
+    /* مساحة كافية أسفل لعدم إخفاء المحتوى خلف زر الإضافة + شريط التنقل */
+    padding: 80px 20px calc(140px + env(safe-area-inset-bottom, 0px));
 }
 
 .product-image {
@@ -1214,10 +1215,13 @@ body {
 
 .fixed-bottom-btn {
     position: fixed;
-    bottom: 70px;
+    /* فوق شريط التنقل السفلي (65px) مع safe-area وهامش إضافي */
+    bottom: calc(65px + env(safe-area-inset-bottom, 0px) + 10px);
     left: 20px;
     right: 20px;
     z-index: 10002;
+    /* ظل خفيف لعزل الزر عن المحتوى */
+    filter: drop-shadow(0 -4px 12px rgba(0,0,0,0.2));
 }
 
 .btn-add-to-cart {
@@ -1243,7 +1247,7 @@ body {
 
 /* ===== صفحة السلة ===== */
 .cart-items-container {
-    padding: 80px 20px 200px;
+    padding: 80px 20px 320px;
     overflow-y: auto;
     height: calc(100vh - 80px);
     box-sizing: border-box;
@@ -1257,12 +1261,15 @@ body {
 
 .cart-summary-container {
     position: fixed;
-    bottom: 60px;
+    /* يُحسب فوق شريط التنقل السفلي مباشرةً مع مراعاة safe-area */
+    bottom: calc(65px + env(safe-area-inset-bottom, 0px));
     left: 0;
+    right: 0;
     width: 100%;
     z-index: 10001;
     background: #333333;
     padding: 20px;
+    padding-bottom: 24px;
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
     border-top: 2px solid #F5B400;
@@ -1674,8 +1681,12 @@ body {
     display: flex;
     justify-content: space-around;
     padding: 10px 0;
+    /* دعم safe-area للأجهزة ذات الشق وشريط الإيماءات */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     z-index: 10000;
+    /* ارتفاع ثابت لضمان الحسابات الصحيحة */
+    min-height: 65px;
 }
 
 .nav-item {
@@ -1904,10 +1915,10 @@ body {
     }
 
     .cart-summary-container {
-        bottom: 60px !important;
+        bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
         padding: 15px;
         position: fixed !important;
-        z-index: 9999 !important;
+        z-index: 10001 !important;
     }
 
 
@@ -1934,18 +1945,18 @@ body {
     .cart-items-container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 80px 20px 200px;
+        padding: 80px 20px 320px;
     }
 
+    /* للآيباد: cart-summary محدود العرض ومتوسط الصفحة */
     .cart-summary-container {
         max-width: 800px;
         margin: 0 auto;
         left: 0;
         right: 0;
-        border-radius: var(--border-radius-large);
-        width: calc(100% - 40px);
-        bottom: 80px !important;
-        z-index: 9999 !important;
+        border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+        bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+        z-index: 10001 !important;
     }
 }
 
@@ -2010,20 +2021,22 @@ body {
 /* ===== تثبيت قوي لحاوية السلة ===== */
 #cart-screen .cart-summary-container {
     position: fixed !important;
-    bottom: 60px !important;
+    /* يجب أن يكون فوق شريط التنقل السفلي (65px) + safe-area */
+    bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
     left: 0 !important;
     right: 0 !important;
-    z-index: 9999 !important;
+    z-index: 10001 !important;
     background: var(--primary-medium) !important;
     padding: 20px !important;
+    padding-bottom: 24px !important;
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0 !important;
     box-shadow: var(--shadow-medium) !important;
     border-top: 2px solid var(--accent-yellow) !important;
-    min-height: 180px !important;
 }
 
 #cart-screen .cart-items-container {
-    padding-bottom: 200px !important;
+    /* مساحة كافية لعدم إخفاء المحتوى خلف حاوية الملخص */
+    padding-bottom: 320px !important;
 }
 
 /* ===== Edit Profile Screen ===== */
