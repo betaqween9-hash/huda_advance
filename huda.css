@@ -29,6 +29,18 @@
     --transition-fast: 0.2s ease;
     --transition-medium: 0.3s ease;
     --transition-slow: 0.5s ease;
+
+    /* ================================================================
+     * نظام الأزرار الثابتة - قيم محسوبة بـ JavaScript عند التحميل
+     * --bottom-nav-height   : الارتفاع الفعلي لشريط التنقل السفلي (يُحدَّث بـ JS)
+     * --safe-area-bottom    : مساحة الأمان السفلية للأجهزة الحديثة (notch / home bar)
+     * --app-bottom-offset   : المسافة الكاملة من الأسفل للأزرار الثابتة
+     * --screen-padding-bottom: الـ padding السفلي للشاشات القابلة للتمرير
+     * ================================================================ */
+    --bottom-nav-height: 65px;
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --app-bottom-offset: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 10px);
+    --screen-padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 20px);
 }
 
 /* ===== الإعدادات العامة ===== */
@@ -52,13 +64,16 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    /* استخدام --real-vh بدلاً من 100vh لتفادي مشكلة المتصفحات المحمولة */
+    height: calc(var(--real-vh, 1vh) * 100);
     background-color: var(--primary-dark);
     transform: translateX(100%);
     transition: transform var(--transition-medium);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     z-index: 1;
-    padding-bottom: 80px;
+    /* padding سفلي موحد يمنع اختفاء المحتوى خلف شريط التنقل */
+    padding-bottom: var(--screen-padding-bottom);
     box-sizing: border-box;
 }
 
@@ -1101,8 +1116,8 @@ body {
 
 /* ===== صفحة تفاصيل المنتج ===== */
 .product-details-container {
-    /* مساحة كافية أسفل لعدم إخفاء المحتوى خلف زر الإضافة + شريط التنقل */
-    padding: 80px 20px calc(140px + env(safe-area-inset-bottom, 0px));
+    /* مساحة إضافية تأخذ في الحسبان: زر الإضافة (70px) + الـ offset الكامل */
+    padding: 80px 20px calc(var(--app-bottom-offset) + 80px);
 }
 
 .product-image {
@@ -1213,15 +1228,16 @@ body {
     font-weight: 500;
 }
 
+/* ===== الزر الثابت في الأسفل (تفاصيل المنتج) ===== */
 .fixed-bottom-btn {
     position: fixed;
-    /* فوق شريط التنقل السفلي (65px) مع safe-area وهامش إضافي */
-    bottom: calc(65px + env(safe-area-inset-bottom, 0px) + 10px);
-    left: 20px;
-    right: 20px;
+    /* يُوضع مباشرةً فوق شريط التنقل مع مراعاة safe-area */
+    bottom: var(--app-bottom-offset);
+    left: 16px;
+    right: 16px;
     z-index: 10002;
-    /* ظل خفيف لعزل الزر عن المحتوى */
-    filter: drop-shadow(0 -4px 12px rgba(0,0,0,0.2));
+    /* ضمان ظهور الزر فوق أي عنصر آخر */
+    isolation: isolate;
 }
 
 .btn-add-to-cart {
@@ -1261,18 +1277,18 @@ body {
 
 .cart-summary-container {
     position: fixed;
-    /* يُحسب فوق شريط التنقل السفلي مباشرةً مع مراعاة safe-area */
-    bottom: calc(65px + env(safe-area-inset-bottom, 0px));
+    /* يُحسب مباشرةً فوق شريط التنقل بالمتغير الموحد */
+    bottom: var(--bottom-nav-height);
     left: 0;
     right: 0;
     width: 100%;
     z-index: 10001;
-    background: #333333;
+    background: var(--primary-medium);
     padding: 20px;
-    padding-bottom: 24px;
+    padding-bottom: calc(20px + var(--safe-area-bottom));
     border-radius: 20px 20px 0 0;
-    box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
-    border-top: 2px solid #F5B400;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    border-top: 2px solid var(--accent-yellow);
 }
 
 .cart-item {
@@ -1680,12 +1696,14 @@ body {
     background: var(--primary-darker);
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
-    /* دعم safe-area للأجهزة ذات الشق وشريط الإيماءات */
-    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    padding: 8px 0;
+    /* safe-area: ضروري لـ iPhone X+ و-Android مع شريط الإيماء */
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
     z-index: 10000;
-    /* ارتفاع ثابت لضمان الحسابات الصحيحة */
+    /* ارتفاع ثابت لشريط التنقل فقط (دون safe-area)
+       الـ JS سيقرأ الارتفاع الفعلي ويضبط المتغير --bottom-nav-height */
     min-height: 65px;
 }
 
@@ -1889,37 +1907,7 @@ body {
         max-height: calc(100vh - 120px);
     }
 }
-    
-    .offers-horizontal {
-        gap: 10px;
-    }
-    
-    .offer-card {
-        min-width: 130px;
-    }
-    
-    .navbar {
-        padding: 12px 15px;
-    }
-    
-    .nav-brand {
-        font-size: 18px;
-    }
-    
-    .section-title {
-        font-size: 20px;
-    }
-
-    .cart-items-container {
-        padding: 80px 20px 200px;
-    }
-
-    .cart-summary-container {
-        bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
-        padding: 15px;
-        position: fixed !important;
-        z-index: 10001 !important;
-    }
+/* أسطر كانت خارج media query خطأً - تم دمجها داخل القسم الصحيح (ذات ال 768px) */
 
 
 @media (min-width: 768px) {
@@ -1942,10 +1930,11 @@ body {
         padding: 0 20px 100px;
     }
 
+    /* للآيباد - مساحة سفلية بالمتغير الموحد */
     .cart-items-container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 80px 20px 320px;
+        padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 220px);
     }
 
     /* للآيباد: cart-summary محدود العرض ومتوسط الصفحة */
@@ -1955,7 +1944,7 @@ body {
         left: 0;
         right: 0;
         border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
-        bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+        bottom: var(--bottom-nav-height) !important;
         z-index: 10001 !important;
     }
 }
@@ -2018,25 +2007,24 @@ body {
     line-height: 1.5;
 }
 
-/* ===== تثبيت قوي لحاوية السلة ===== */
+/* ===== تثبيت موحد لحاوية السلة - يستخدم المتغيرات المركزية ===== */
 #cart-screen .cart-summary-container {
     position: fixed !important;
-    /* يجب أن يكون فوق شريط التنقل السفلي (65px) + safe-area */
-    bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: var(--bottom-nav-height) !important;
     left: 0 !important;
     right: 0 !important;
     z-index: 10001 !important;
     background: var(--primary-medium) !important;
     padding: 20px !important;
-    padding-bottom: 24px !important;
+    padding-bottom: calc(20px + var(--safe-area-bottom)) !important;
     border-radius: var(--border-radius-large) var(--border-radius-large) 0 0 !important;
-    box-shadow: var(--shadow-medium) !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
     border-top: 2px solid var(--accent-yellow) !important;
 }
 
 #cart-screen .cart-items-container {
-    /* مساحة كافية لعدم إخفاء المحتوى خلف حاوية الملخص */
-    padding-bottom: 320px !important;
+    /* مساحة تشمل: ارتفاع حاوية الملخص (≈180px) + bottom-nav + safe-area */
+    padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 200px) !important;
 }
 
 /* ===== Edit Profile Screen ===== */

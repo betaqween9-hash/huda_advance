@@ -21,7 +21,61 @@ let currentProduct = null;
 
 // ===== تهيئة التطبيق =====
 
+/**
+ * ================================================================
+ * نظام الـ Viewport الديناميكي
+ * ================================================================
+ * يحل المشاكل التالية:
+ * 1. مشكلة 100vh في المتصفحات المحمولة (Chrome/Safari يخفيان شريط العنوان)
+ * 2. اختلاف الارتفاع بين المتصفح العادي وتطبيقات مثل Instagram
+ * 3. safe-area-inset-bottom في أجهزة iPhone X والأحدث
+ *
+ * المتغيرات التي يضبطها:
+ * - --real-vh      : ارتفاع 1vh حقيقي (يُستخدم بدلاً من 100vh)
+ * - --bottom-nav-height : الارتفاع الفعلي لشريط التنقل السفلي
+ * ================================================================
+ */
+function setupViewportSystem() {
+    const root = document.documentElement;
+    const bottomNav = document.querySelector('.bottom-nav');
+
+    function updateViewportVars() {
+        // 1. حساب الـ viewport الحقيقي (يتجاهل شريط العنوان المنزلق)
+        const realVH = window.innerHeight * 0.01;
+        root.style.setProperty('--real-vh', `${realVH}px`);
+
+        // 2. حساب الارتفاع الفعلي لشريط التنقل السفلي
+        if (bottomNav) {
+            const navHeight = bottomNav.getBoundingClientRect().height;
+            if (navHeight > 0) {
+                root.style.setProperty('--bottom-nav-height', `${navHeight}px`);
+            }
+        }
+    }
+
+    // تشغيل عند التحميل
+    updateViewportVars();
+
+    // تشغيل عند تغيير حجم النافذة
+    window.addEventListener('resize', updateViewportVars, { passive: true });
+
+    // تشغيل عند التدوير (مهم للجوال)
+    window.addEventListener('orientationchange', () => {
+        // تأخير بسيط للسماح للمتصفح بالانتهاء من التدوير
+        setTimeout(updateViewportVars, 200);
+    }, { passive: true });
+
+    // دعم Visual Viewport API (متوفر في Chrome/Safari الحديث)
+    // يُحدِّث الارتفاع عند ظهور/إخفاء لوحة المفاتيح
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', updateViewportVars, { passive: true });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
+    // يجب تشغيله أولاً قبل أي شيء آخر
+    setupViewportSystem();
 
     initializeApp();
 
