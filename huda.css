@@ -1116,7 +1116,8 @@ body {
 
 /* ===== صفحة تفاصيل المنتج ===== */
 .product-details-container {
-    padding: 80px 20px 40px;
+    /* مساحة مريحة في الأسفل للسماح برؤية زر الإضافة وشريط التنقل دون تداخل */
+    padding: 80px 20px calc(var(--bottom-nav-height) + 40px);
 }
 
 .product-image {
@@ -1230,7 +1231,16 @@ body {
 /* ===== الزر الثابت في الصفحة (تفاصيل المنتج) ===== */
 .fixed-bottom-btn-static {
     margin-top: 30px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
+}
+
+.fixed-bottom-btn-static .btn-add-to-cart {
+    width: 100%;
+    padding: 16px;
+    border-radius: var(--border-radius);
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: var(--shadow-medium);
 }
 
 .btn-add-to-cart {
@@ -2102,7 +2112,7 @@ body {
     background: var(--primary-medium);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: var(--shadow-light);
+    box-shadow: var(--shadow-medium);
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -2232,16 +2242,61 @@ body {
 
 .address-form label {
     font-size: 14px;
-    font-weight: 500;
-    color: #333;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
 }
 
 .address-form input {
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--primary-medium);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     font-size: 14px;
+    color: var(--white);
     font-family: 'Cairo', sans-serif;
+}
+
+.address-map-container {
+    height: 250px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--primary-darker);
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-location {
+    width: 100%;
+    background: rgba(245, 180, 0, 0.1);
+    color: var(--accent-yellow);
+    border: 1px solid var(--accent-yellow);
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-location:hover {
+    background: var(--accent-yellow);
+    color: var(--text-primary);
+}
+
+.address-form input::placeholder {
+    color: var(--gray-medium);
+}
+
+.address-form input:focus {
+    outline: none;
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 0 2px rgba(245, 180, 0, 0.1);
+}
     transition: all 0.3s ease;
 }
 

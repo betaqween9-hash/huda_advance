@@ -637,8 +637,6 @@ function handleRegister() {
         return;
     }
 
-    
-
     // إنشاء مستخدم جديد
 
     const newUser = {
