@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1a1a2e">
@@ -15,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
     <!-- شريط حالة الاتصال -->
     <div id="offline-banner" class="offline-banner">
@@ -23,48 +20,116 @@
         <span data-i18n="offline-message">لا يوجد اتصال بالإنترنت</span>
     </div>
 
-    <!-- Splash Screen -->
-    <div id="splash-screen" class="screen active">
-        <div class="splash-content">
-            <div class="logo-container">
-                <div class="logo">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h1 data-i18n="app-name">الهدى ادفانس</h1>
+    <!-- حاوية المحتوى الرئيسي -->
+    <div class="main-content-container">
+        <!-- Splash Screen -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content">
+                <div class="logo-container">
+                    <div class="logo">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h1 data-i18n="app-name">الهدى ادفانس</h1>
+                    </div>
+                    <p class="tagline" data-i18n="tagline">تسوق بسهولة… كل احتياجاتك في مكان واحد</p>
                 </div>
-                <p class="tagline" data-i18n="tagline">تسوق بسهولة… كل احتياجاتك في مكان واحد</p>
             </div>
         </div>
-    </div>
 
-    <!-- Auth Screen -->
-    <div id="auth-screen" class="screen">
-        <div class="auth-container">
-            <div class="auth-card">
-                <div class="auth-header">
-                    <i class="fas fa-user-circle"></i>
-                    <h2 id="auth-title" data-i18n="welcome-message">مرحباً بك في الهدى ادفانس</h2>
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-user-circle"></i>
+                        <h2 id="auth-title" data-i18n="welcome-message">مرحباً بك في الهدى ادفانس</h2>
+                        <p id="auth-subtitle" data-i18n="auth-subtitle">سجل دخولك أو أنشئ حساب جديد</p>
+                    </div>
+                    
+                    <!-- Tab Buttons -->
+                    <div class="auth-tabs">
+                        <button id="login-tab" class="tab-btn active" onclick="switchAuthTab('login')" data-i18n="login">تسجيل الدخول</button>
+                        <button id="register-tab" class="tab-btn" onclick="switchAuthTab('register')" data-i18n="register">إنشاء حساب</button>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form active">
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" id="login-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required data-i18n-placeholder="email-or-phone">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="كلمة المرور" required data-i18n-placeholder="password">
+                        </div>
+                        <div class="remember-forgot">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="remember-me">
+                                <span class="checkmark"></span>
+                                <span data-i18n="remember-me">تذكرني</span>
+                            </label>
+                            <a href="#" class="forgot-password" data-i18n="forgot-password">نسيت كلمة المرور؟</a>
+                        </div>
+                        <button type="submit" class="btn-primary" data-i18n="login">تسجيل الدخول</button>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form id="register-form" class="auth-form">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="register-name" placeholder="الاسم الكامل" required data-i18n-placeholder="enter-full-name">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" id="register-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required data-i18n-placeholder="email-or-phone">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="register-location" placeholder="العنوان" required data-i18n-placeholder="enter-address">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="register-password" placeholder="كلمة المرور" required data-i18n-placeholder="password">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="register-confirm-password" placeholder="تأكيد كلمة المرور" required data-i18n-placeholder="confirm-password">
+                        </div>
+                        <button type="submit" class="btn-primary" data-i18n="register">إنشاء حساب</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen">
+            <!-- Navbar -->
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span data-i18n="app-name">الهدى ادفانس</span>
+                </div>
+                <div class="nav-actions">
+                    <div class="notification-icon" onclick="showScreen('notifications')">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
                     <p id="auth-subtitle" data-i18n="auth-subtitle">سجل دخولك أو أنشئ حساب جديد</p>
                 </div>
-
+                
                 <!-- Tab Buttons -->
                 <div class="auth-tabs">
-                    <button id="login-tab" class="tab-btn active" onclick="switchAuthTab('login')"
-                        data-i18n="login">تسجيل الدخول</button>
-                    <button id="register-tab" class="tab-btn" onclick="switchAuthTab('register')"
-                        data-i18n="register">إنشاء حساب</button>
+                    <button id="login-tab" class="tab-btn active" onclick="switchAuthTab('login')" data-i18n="login">تسجيل الدخول</button>
+                    <button id="register-tab" class="tab-btn" onclick="switchAuthTab('register')" data-i18n="register">إنشاء حساب</button>
                 </div>
-
+                
                 <!-- Login Form -->
                 <form id="login-form" class="auth-form active">
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" id="login-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required
-                            data-i18n-placeholder="email-or-phone">
+                        <input type="text" id="login-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required data-i18n-placeholder="email-or-phone">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="login-password" placeholder="كلمة المرور" required
-                            data-i18n-placeholder="password">
+                        <input type="password" id="login-password" placeholder="كلمة المرور" required data-i18n-placeholder="password">
                     </div>
                     <div class="remember-forgot">
                         <label class="checkbox-container">
@@ -76,33 +141,28 @@
                     </div>
                     <button type="submit" class="btn-primary" data-i18n="login">تسجيل الدخول</button>
                 </form>
-
+                
                 <!-- Register Form -->
                 <form id="register-form" class="auth-form">
                     <div class="input-group">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="register-name" placeholder="الاسم الكامل" required
-                            data-i18n-placeholder="enter-full-name">
+                        <input type="text" id="register-name" placeholder="الاسم الكامل" required data-i18n-placeholder="enter-full-name">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
-                        <input type="text" id="register-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required
-                            data-i18n-placeholder="email-or-phone">
+                        <input type="text" id="register-email" placeholder="البريد الإلكتروني أو رقم الهاتف" required data-i18n-placeholder="email-or-phone">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-map-marker-alt"></i>
-                        <input type="text" id="register-location" placeholder="العنوان" required
-                            data-i18n-placeholder="enter-address">
+                        <input type="text" id="register-location" placeholder="العنوان" required data-i18n-placeholder="enter-address">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="register-password" placeholder="كلمة المرور" required
-                            data-i18n-placeholder="password">
+                        <input type="password" id="register-password" placeholder="كلمة المرور" required data-i18n-placeholder="password">
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="register-confirm-password" placeholder="تأكيد كلمة المرور" required
-                            data-i18n-placeholder="confirm-password">
+                        <input type="password" id="register-confirm-password" placeholder="تأكيد كلمة المرور" required data-i18n-placeholder="confirm-password">
                     </div>
                     <button type="submit" class="btn-primary" data-i18n="register">إنشاء حساب</button>
                 </form>
@@ -134,8 +194,7 @@
         <div class="search-container">
             <div class="search-bar" onclick="toggleSearchInterface()">
                 <i class="fas fa-search" id="search-icon"></i>
-                <input type="text" placeholder="ابحث عن منتجات..." id="search-input"
-                    data-i18n-placeholder="search-placeholder">
+                <input type="text" placeholder="ابحث عن منتجات..." id="search-input" data-i18n-placeholder="search-placeholder">
             </div>
         </div>
 
@@ -144,8 +203,7 @@
             <div class="search-header">
                 <div class="search-bar-full">
                     <i class="fas fa-arrow-right" onclick="closeSearchInterface()"></i>
-                    <input type="text" placeholder="ابحث عن منتجات..." id="search-input-full" autofocus
-                        data-i18n-placeholder="search-placeholder">
+                    <input type="text" placeholder="ابحث عن منتجات..." id="search-input-full" autofocus data-i18n-placeholder="search-placeholder">
                     <i class="fas fa-search"></i>
                 </div>
             </div>
@@ -357,12 +415,10 @@
                         <span id="product-origin">المملكة العربية السعودية</span>
                     </div>
                 </div>
-
-                <div class="fixed-bottom-btn-static">
-                    <button class="btn-add-to-cart" onclick="addToCartFromDetails()" data-i18n="add-to-cart">إضافة إلى
-                        السلة</button>
-                </div>
             </div>
+        </div>
+        <div class="fixed-bottom-btn">
+            <button class="btn-add-to-cart" onclick="addToCartFromDetails()" data-i18n="add-to-cart">إضافة إلى السلة</button>
         </div>
     </div>
 
@@ -426,27 +482,18 @@
         <div class="checkout-container">
             <form class="checkout-form">
                 <!-- User Info Summary -->
-                <div class="checkout-user-info"
-                    style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #eee;">
-                    <h4
-                        style="margin-top:0; margin-bottom:10px; font-size:16px; color:var(--text-primary); border-bottom:1px solid #ddd; padding-bottom:8px;">
-                        بيانات العميل</h4>
-                    <p style="margin:8px 0; color:var(--text-secondary); font-size:14px;"><i class="fas fa-user"
-                            style="color:var(--accent-yellow); width:20px;"></i> <span id="checkout-user-name"></span>
-                    </p>
-                    <p style="margin:8px 0; color:var(--text-secondary); font-size:14px;"><i class="fas fa-phone"
-                            style="color:var(--accent-yellow); width:20px;"></i> <span id="checkout-user-phone"></span>
-                    </p>
+                <div class="checkout-user-info" style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #eee;">
+                    <h4 style="margin-top:0; margin-bottom:10px; font-size:16px; color:var(--text-primary); border-bottom:1px solid #ddd; padding-bottom:8px;">بيانات العميل</h4>
+                    <p style="margin:8px 0; color:var(--text-secondary); font-size:14px;"><i class="fas fa-user" style="color:var(--accent-yellow); width:20px;"></i> <span id="checkout-user-name"></span></p>
+                    <p style="margin:8px 0; color:var(--text-secondary); font-size:14px;"><i class="fas fa-phone" style="color:var(--accent-yellow); width:20px;"></i> <span id="checkout-user-phone"></span></p>
                 </div>
 
                 <div class="form-group">
                     <label data-i18n="shipping-address">عنوان التوصيل</label>
-                    <div id="checkout-addresses-list"
-                        style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                    <div id="checkout-addresses-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
                         <!-- يتم ملء العناوين هنا -->
                     </div>
-                    <button type="button" class="btn-secondary" onclick="showAddAddressForm()"
-                        style="width: 100%; padding: 12px; font-family: 'Cairo', sans-serif;">
+                    <button type="button" class="btn-secondary" onclick="showAddAddressForm()" style="width: 100%; padding: 12px; font-family: 'Cairo', sans-serif;">
                         <i class="fas fa-plus"></i> <span data-i18n="add-new-address">إضافة عنوان جديد</span>
                     </button>
                     <!-- Hidden input to store selected address ID -->
@@ -645,23 +692,19 @@
             <form id="edit-profile-form" class="edit-profile-form">
                 <div class="form-group">
                     <label data-i18n="full-name">الاسم الكامل</label>
-                    <input type="text" id="edit-name" placeholder="أدخل اسمك الكامل" required
-                        data-i18n-placeholder="enter-full-name">
+                    <input type="text" id="edit-name" placeholder="أدخل اسمك الكامل" required data-i18n-placeholder="enter-full-name">
                 </div>
                 <div class="form-group">
                     <label data-i18n="email">البريد الإلكتروني</label>
-                    <input type="email" id="edit-email" placeholder="أدخل البريد الإلكتروني" required
-                        data-i18n-placeholder="enter-email">
+                    <input type="email" id="edit-email" placeholder="أدخل البريد الإلكتروني" required data-i18n-placeholder="enter-email">
                 </div>
                 <div class="form-group">
                     <label data-i18n="phone">رقم الهاتف</label>
-                    <input type="tel" id="edit-phone" placeholder="أدخل رقم الهاتف" required
-                        data-i18n-placeholder="enter-phone">
+                    <input type="tel" id="edit-phone" placeholder="أدخل رقم الهاتف" required data-i18n-placeholder="enter-phone">
                 </div>
                 <div class="form-group">
                     <label data-i18n="address">العنوان</label>
-                    <input type="text" id="edit-location" placeholder="أدخل العنوان بالتفصيل" required
-                        data-i18n-placeholder="enter-address">
+                    <input type="text" id="edit-location" placeholder="أدخل العنوان بالتفصيل" required data-i18n-placeholder="enter-address">
                 </div>
                 <button type="submit" class="btn-confirm" data-i18n="save-changes">حفظ التغييرات</button>
             </form>
@@ -702,23 +745,20 @@
                 <input type="hidden" id="address-id">
                 <input type="hidden" id="address-lat">
                 <input type="hidden" id="address-lng">
-
+                
                 <div class="form-group">
                     <label data-i18n="location-map">تحديد الموقع على الخريطة</label>
-                    <div id="map"
-                        style="height: 250px; width: 100%; border-radius: 8px; background-color: #f7f7f7; margin-bottom: 10px; border: 1px solid #ddd;">
-                    </div>
-                    <button type="button" class="btn-location" onclick="getCurrentLocation()"
-                        style="width: 100%; background: #e0f2fe; color: #0284c7; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif;">
+                    <div id="map" style="height: 250px; width: 100%; border-radius: 8px; background-color: #f7f7f7; margin-bottom: 10px; border: 1px solid #ddd;"></div>
+                    <button type="button" class="btn-location" onclick="getCurrentLocation()" style="width: 100%; background: #e0f2fe; color: #0284c7; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif;">
                         <i class="fas fa-location-arrow"></i> استخدام موقعي الحالي
                     </button>
                 </div>
-
+                
                 <div class="form-group">
                     <label data-i18n="address-description">وصف الموقع</label>
                     <input type="text" id="address-description" placeholder="مثال: بجانب المسجد، خلف السوق..." required>
                 </div>
-
+                
                 <button type="submit" class="btn-confirm" data-i18n="save-address">حفظ العنوان</button>
             </form>
         </div>
@@ -773,8 +813,7 @@
                     <i class="fas fa-bell"></i>
                     <span data-i18n="offer-notifications">إشعارات العروض</span>
                     <label class="switch">
-                        <input type="checkbox" id="offers-notifications" onchange="toggleNotifications('offers')"
-                            checked>
+                        <input type="checkbox" id="offers-notifications" onchange="toggleNotifications('offers')" checked>
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -782,8 +821,7 @@
                     <i class="fas fa-truck"></i>
                     <span data-i18n="order-notifications">إشعارات الطلبات</span>
                     <label class="switch">
-                        <input type="checkbox" id="orders-notifications" onchange="toggleNotifications('orders')"
-                            checked>
+                        <input type="checkbox" id="orders-notifications" onchange="toggleNotifications('orders')" checked>
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -910,26 +948,25 @@
         <div class="info-container">
             <div class="info-content">
                 <h3 data-i18n="terms-conditions">الشروط والأحكام</h3>
-
+                
                 <h4>1. قبول الشروط</h4>
                 <p>باستخدامك لتطبيق "الهدى ادفانس"، فإنك توافق على الالتزام بهذه الشروط والأحكام.</p>
-
+                
                 <h4>2. التسجيل والحساب</h4>
                 <p>يجب على المستخدمين تقديم معلومات دقيقة وحقيقية عند التسجيل. أنت مسؤول عن الحفاظ على سرية حسابك.</p>
-
+                
                 <h4>3. الطلبات والدفع</h4>
-                <p>جميع الأسعار معروضة بالريال السعودي. نحتفظ بالحق في تعديل الأسعار في أي وقت. الدفع يتم عند الاستلام
-                    أو عبر طرق الدفع المتاحة.</p>
-
+                <p>جميع الأسعار معروضة بالريال السعودي. نحتفظ بالحق في تعديل الأسعار في أي وقت. الدفع يتم عند الاستلام أو عبر طرق الدفع المتاحة.</p>
+                
                 <h4>4. التوصيل</h4>
                 <p>نقوم بتوصيل الطلبات في غضون فترة زمنية محددة. نحن غير مسؤولين عن أي تأخير ناتج عن ظروف قاهرة.</p>
-
+                
                 <h4>5. الإلغاء والاسترجاع</h4>
                 <p>يمكن إلغاء الطلب قبل الشحن. سياسة الاسترجاع تطبق حسب نوع المنتج وحالة الإرجاع.</p>
-
+                
                 <h4>6. الخصوصية</h4>
                 <p>نحن نحترم خصوصيتك ونحمي بياناتك وفقاً لسياسة الخصوصية.</p>
-
+                
                 <h4>7. التعديلات</h4>
                 <p>نحن نحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت دون إشعار مسبق.</p>
             </div>
@@ -948,25 +985,25 @@
         <div class="info-container">
             <div class="info-content">
                 <h3 data-i18n="privacy-policy">سياسة الخصوصية</h3>
-
+                
                 <h4>1. جمع المعلومات</h4>
                 <p>نجمع معلومات شخصية مثل الاسم والبريد الإلكتروني ورقم الهاتف والعنوان عند التسجيل وإتمام الطلبات.</p>
-
+                
                 <h4>2. استخدام المعلومات</h4>
                 <p>نستخدم معلوماتك لمعالجة الطلبات، تحسين الخدمة، وإرسال إشعارات عن العروض والتحديثات.</p>
-
+                
                 <h4>3. حماية المعلومات</h4>
                 <p>نتخذ تدابير أمنية لحماية بياناتك من الوصول غير المصرح به أو التسرب أو التعديل.</p>
-
+                
                 <h4>4. مشاركة المعلومات</h4>
                 <p>لا نشارك معلوماتك الشخصية مع أطراف ثالثة إلا لغرض معالجة الطلبات أو كما هو مطلوب بموجب القانون.</p>
-
+                
                 <h4>5. ملفات تعريف الارتباط</h4>
                 <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك في التطبيق.</p>
-
+                
                 <h4>6. حقوقك</h4>
                 <p>لديك الحق في الوصول إلى بياناتك وتصحيحها أو حذفها في أي وقت.</p>
-
+                
                 <h4>7. التغييرات</h4>
                 <p>قد نقوم بتحديث سياسة الخصوصية من وقت لآخر. سيتم إعلامك بأي تغييرات كبيرة.</p>
             </div>
@@ -985,37 +1022,37 @@
         <div class="info-container">
             <div class="info-content">
                 <h3 data-i18n="faq">الأسئلة الشائعة</h3>
-
+                
                 <div class="faq-item">
                     <h4>كيف يمكنني التسجيل في التطبيق؟</h4>
                     <p>يمكنك التسجيل عبر الضغط على زر "تسجيل الدخول" في شاشة البداية وملء البيانات المطلوبة.</p>
                 </div>
-
+                
                 <div class="faq-item">
                     <h4>كيف يمكنني إضافة منتج للسلة؟</h4>
                     <p>اضغط على زر (+) بجانب المنتج لإضافته إلى السلة.</p>
                 </div>
-
+                
                 <div class="faq-item">
                     <h4>ما هي طرق الدفع المتاحة؟</h4>
                     <p>نقبل الدفع عند الاستلام، التحويل البنكي، والمحفظة الإلكترونية.</p>
                 </div>
-
+                
                 <div class="faq-item">
                     <h4>كم تستغرق عملية التوصيل؟</h4>
                     <p>يتم التوصيل عادة خلال 30-60 دقيقة حسب موقعك.</p>
                 </div>
-
+                
                 <div class="faq-item">
                     <h4>كيف يمكنني تتبع طلبي؟</h4>
                     <p>يمكنك تتبع طلبك من خلال شاشة "الطلبات" في التطبيق.</p>
                 </div>
-
+                
                 <div class="faq-item">
                     <h4>هل يمكنني إلغاء طلبي؟</h4>
                     <p>نعم، يمكنك إلغاء الطلب قبل الشحن من خلال شاشة الطلبات.</p>
                 </div>
-
+                
                 <div class="faq-item">
                     <h4>كيف يمكنني إضافة منتج للمفضلة؟</h4>
                     <p>اضغط على أيقونة القلب بجانب المنتج لإضافته إلى المفضلة.</p>
@@ -1036,23 +1073,22 @@
         <div class="info-container">
             <div class="info-content">
                 <h3 data-i18n="about-us">معلومات عنا</h3>
-
+                
                 <div class="about-section">
                     <h4 data-i18n="who-we-are">من نحن</h4>
-                    <p>تطبيق "الهدى ادفانس" هو تطبيق متجر إلكتروني متخصص في بيع المنتجات الغذائية والاستهلاكية. نسعى
-                        لتوفير أفضل المنتجات بأسعار تنافسية مع خدمة توصيل سريعة وموثوقة.</p>
+                    <p>تطبيق "الهدى ادفانس" هو تطبيق متجر إلكتروني متخصص في بيع المنتجات الغذائية والاستهلاكية. نسعى لتوفير أفضل المنتجات بأسعار تنافسية مع خدمة توصيل سريعة وموثوقة.</p>
                 </div>
-
+                
                 <div class="about-section">
                     <h4 data-i18n="our-vision">رؤيتنا</h4>
                     <p>أن نكون الخيار الأول للعملاء في المملكة العربية السعودية للتسوق الإلكتروني للمنتجات الغذائية.</p>
                 </div>
-
+                
                 <div class="about-section">
                     <h4 data-i18n="our-mission">رسالتنا</h4>
                     <p>توفير تجربة تسوق مريحة وآمنة للعملاء مع التركيز على الجودة والسرعة والخدمة المتميزة.</p>
                 </div>
-
+                
                 <div class="about-section">
                     <h4 data-i18n="our-values">قيمنا</h4>
                     <ul>
@@ -1062,7 +1098,7 @@
                         <li>الخدمة: خدمة عملاء متميزة</li>
                     </ul>
                 </div>
-
+                
                 <div class="about-section">
                     <h4 data-i18n="contact-us">تواصل معنا</h4>
                     <p>الهاتف: 966555555555+</p>
@@ -1104,5 +1140,4 @@
 
     <script src="huda.js"></script>
 </body>
-
 </html>
