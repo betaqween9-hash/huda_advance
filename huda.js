@@ -628,19 +628,13 @@ function handleRegister() {
     
 
     // التحقق من وجود المستخدم مسبقاً
-
     const users = JSON.parse(localStorage.getItem('huda-users') || '[]');
-
-    const existingUser = users.find(u => u.email === emailInput.value);
-
+    const inputEmail = emailInput.value.trim().toLowerCase();
+    const existingUser = users.find(u => u.email.trim().toLowerCase() === inputEmail);
     
-
     if (existingUser) {
-
         showToast('هذا البريد الإلكتروني مسجل بالفعل');
-
         return;
-
     }
 
     

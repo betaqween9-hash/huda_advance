@@ -403,8 +403,8 @@ body {
     position: relative;
     cursor: pointer;
     transition: var(--transition-fast);
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: var(--primary-medium);
     display: flex;
@@ -420,7 +420,7 @@ body {
 
 .notification-icon i,
 .cart-icon i {
-    font-size: 18px;
+    font-size: 22px;
     color: var(--white);
 }
 
@@ -1116,8 +1116,7 @@ body {
 
 /* ===== صفحة تفاصيل المنتج ===== */
 .product-details-container {
-    /* مساحة إضافية تأخذ في الحسبان: زر الإضافة (70px) + الـ offset الكامل */
-    padding: 80px 20px calc(var(--app-bottom-offset) + 80px);
+    padding: 80px 20px 40px;
 }
 
 .product-image {
@@ -1228,16 +1227,10 @@ body {
     font-weight: 500;
 }
 
-/* ===== الزر الثابت في الأسفل (تفاصيل المنتج) ===== */
-.fixed-bottom-btn {
-    position: fixed;
-    /* يُوضع مباشرةً فوق شريط التنقل مع مراعاة safe-area */
-    bottom: var(--app-bottom-offset);
-    left: 16px;
-    right: 16px;
-    z-index: 10002;
-    /* ضمان ظهور الزر فوق أي عنصر آخر */
-    isolation: isolate;
+/* ===== الزر الثابت في الصفحة (تفاصيل المنتج) ===== */
+.fixed-bottom-btn-static {
+    margin-top: 30px;
+    padding-bottom: 20px;
 }
 
 .btn-add-to-cart {
@@ -2106,11 +2099,12 @@ body {
 }
 
 .address-card {
-    background: white;
+    background: var(--primary-medium);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-light);
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .address-card:hover {
@@ -2123,7 +2117,7 @@ body {
     align-items: center;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .address-name {
@@ -2132,7 +2126,7 @@ body {
     gap: 10px;
     font-weight: 600;
     font-size: 16px;
-    color: #333;
+    color: var(--white);
 }
 
 .address-name i {
@@ -2181,7 +2175,7 @@ body {
     gap: 10px;
     margin: 8px 0;
     font-size: 14px;
-    color: #666;
+    color: var(--gray-light);
 }
 
 .address-details i {
