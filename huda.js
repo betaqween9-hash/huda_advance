@@ -2528,6 +2528,13 @@ function applyLanguage(language) {
     // تغيير اتجاه الصفحة
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
+
+    // تغيير الخط حسب اللغة
+    if (language === 'en') {
+        document.body.classList.add('lang-en');
+    } else {
+        document.body.classList.remove('lang-en');
+    }
 }
 
 function changeTheme(theme) {
